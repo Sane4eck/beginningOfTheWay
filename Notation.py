@@ -42,4 +42,4 @@ class Notation:
         return print(var_resulted), Notation.start_notation_convert()
 
 
-Notation.start_notation_convert()
+# Notation.start_notation_convert()

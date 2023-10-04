@@ -87,4 +87,4 @@ class Calculation:
                     bool_var = False
 
 
-Calculation.determinate_value()
+# Calculation.determinate_value()
