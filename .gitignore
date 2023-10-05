@@ -2,3 +2,4 @@ venv
 main.py
 training.py
 __pycache__/
+.idea
