@@ -1,7 +1,7 @@
 import random
 from random import *
 # from Calculation import *
-from Notation import *
+from Notation import Notation
 
 
 class Operation_of_list:
@@ -59,5 +59,5 @@ class Operation_of_list:
         Operation_of_list.action_list_input(self)
 
 
-a = Operation_of_list()
-print(a.execution_program_with_list())
+# Operation_of_list().execution_program_with_list()
+
