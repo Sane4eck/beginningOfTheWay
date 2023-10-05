@@ -1,17 +1,18 @@
-class Notation:
-    def input_notation_16(self):
-        self.input = input("Input number in 16 notation: ")
-        Notation.func_exit(self.input)
-        self.input = Notation.validation_data(self)
-        self.type = input("Enter type(2 or 10): ")
-        Notation.func_exit(self.type)
-        self.input = Notation.convert_to(self)
-        return self.input
+from base import BaseClient
+
+
+class Notation(BaseClient):
+    def __init__(self):
+        self.input = self.func_exit(input("Input number in 16 notation: "))
+        self.type = self.func_exit(input("Enter type(2 or 10): "))
+
+    def start(self):
+        int_10 = self.validation_data()
+        print_var = self.convert_to(int_10)
+        print(print_var)
 
     def validation_data(self):
         try:
-            # if(self.input == "exit()"):
-            #     return exit()
             input_var = int(self.input, 16)
             return input_var
         except ValueError:
@@ -20,26 +21,15 @@ class Notation:
                         -----You are should input number in format to 16 notation-----
                         --------------------------------------------------------------
                         ''')
-            exit(Notation.input_notation_16(self))
+            exit()
 
-    def convert_to(self):
-        if (self.input == "exit()"):
-            return exit()
-        if (self.type == "10"):
-            return self.input
-        elif (self.type == "2"):
-            return bin(self.input)
+    def convert_to(self, int_10):
+        if self.type == "10":
+            return int_10
+        elif self.type == "2":
+            return bin(int_10)
         else:
-            return print("          \n      Please input 2 or 10...\n"), Notation.start_notation_convert()
+            return print("          \n      Please input 2 or 10...\n")
 
-    def func_exit(self):
-        if (self == "exit()"):
-            return exit()
-
-    def start_notation_convert():
-        classObject = Notation()
-        var_resulted = classObject.input_notation_16()
-        return print(var_resulted), Notation.start_notation_convert()
-
-
-# Notation.start_notation_convert()
+if __name__ == "__main__":
+    Notation().start()
