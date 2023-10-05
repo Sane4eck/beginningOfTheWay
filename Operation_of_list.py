@@ -32,25 +32,32 @@ class Operation_of_list:
             self.my_list.append(randrange(0, 1000, 1))
         return self.my_list
 
-    def action_list(self):
-        Operation_of_list.created_list(self)
-
+    def action_list_input(self):
         self.action = input(
-            "Enter aye you action(print_list(), sum_elements_list(), average_value(), median() or exit(): ")
+            "Enter aye you action(print_list(), sum_elements_list(), average_value(), median() or exit() or repit(): ")
         Notation.func_exit(self.action)
-        print(self.my_list)
+        Operation_of_list.action_list_doing(self)
+
+    def action_list_doing(self):
         if (self.action == "print_list()"):
-            return print(self.my_list)
+            return print(self.my_list), Operation_of_list.action_list_input(self)
         elif (self.action == "sum_elements_list()"):
-            return print(sum(self.my_list))
+            return print(sum(self.my_list)), Operation_of_list.action_list_input(self)
         elif (self.action == "average_value()"):
-            return print(sum(self.my_list)/ len(self.my_list))
+            return print(sum(self.my_list) / len(self.my_list)), Operation_of_list.action_list_input(self)
         elif (self.action == "median()"):
-            return print(list(self.my_list)[int(len(self.my_list)/2)])
+            return print(list(self.my_list)[int(len(self.my_list) / 2)]), Operation_of_list.action_list_input(self)
+        elif (self.action == "repit()"):
+            return Operation_of_list.execution_program_with_list(self)
         else:
             print("Error! There is no such command! Enter one of the commands below!")
-            return Operation_of_list.action_list(self)
+            return Operation_of_list.action_list_input(self)
+
+    def execution_program_with_list(self):
+        Operation_of_list.created_list(self)
+        print(self.my_list)
+        Operation_of_list.action_list_input(self)
 
 
 a = Operation_of_list()
-print(a.action_list())
+print(a.execution_program_with_list())
