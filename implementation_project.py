@@ -1,6 +1,6 @@
-from Calculation import Calculation
-from Notation import Notation
-from Operation_of_list import Operation_of_list
+from calculation import Calculation
+from notation import Notation
+from operation_of_list import Operation_of_list
 from base import BaseClient
 
 
@@ -14,10 +14,13 @@ class Implementation_project(BaseClient):
             return func_name
         else:
             exit()
+
     def calculation(self):
         Calculation().start()
+
     def notation(self):
         Notation().start()
+
     def operation_of_list(self):
         Operation_of_list().start()
 

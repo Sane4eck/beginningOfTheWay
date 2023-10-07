@@ -31,5 +31,6 @@ class Notation(BaseClient):
         else:
             return print("          \n      Please input 2 or 10...\n")
 
+
 if __name__ == "__main__":
     Notation().start()

@@ -34,29 +34,29 @@ class Calculation(BaseClient):
 
     def validator_sign_input(self, sign_operation):
         try:
-            if sign_operation in ['+', '-', '*', '/']:
+            if sign_operation in ["+", "-", "*", "/"]:
                 return sign_operation
         except:
             print("Error")
 
     def plus(self):
-        decid = self.var1 + self.var2
-        return print(f'Summ = {decid}')
+        solution = self.var1 + self.var2
+        return print(f"Summ = {solution}")
 
     def minus(self):
-        decid = self.var1 - self.var2
-        return print(f'Minus = {decid}')
+        solution = self.var1 - self.var2
+        return print(f"Minus = {solution}")
 
     def multiply(self):
-        decid = self.var1 * self.var2
-        return print(f'Multiply = {decid}')
+        solution = self.var1 * self.var2
+        return print(f"Multiply = {solution}")
 
     def division(self):
         if (self.var2 == 0):
             return print("You can't divide by zero...")
         else:
-            decid = self.var1 / self.var2
-            return print(f'division = {decid}')
+            solution = self.var1 / self.var2
+            return print(f"division = {solution}")
 
     def start(self):
         func_dict = {"+": "plus", "-": "minus", "*": "multiply", "/": "division"}

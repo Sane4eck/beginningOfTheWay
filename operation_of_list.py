@@ -7,15 +7,17 @@ class Operation_of_list(BaseClient):
     def __init__(self):
         self.input_count = self.validator_input_count(self.func_exit(input("Enter the count elements of list: ")))
         self.action = self.validator_action(self.func_exit(input(
-            "Enter aye you action(print_list, sum_elements_list, average_value, median or exit: ")))
+            "Enter aye you action (print_list, sum_elements_list, average_value, median or exit: ")))
 
     def validator_input_count(self, value):
         try:
             return int(value)
         except ValueError:
-            print("""
-            hahah
-            """)
+            print(''' 
+                        ----------------------------------------------------------------------------------------------
+                        -----You are should input: (print_list, sum_elements_list, average_value, median or exit)-----
+                        ----------------------------------------------------------------------------------------------
+                        ''')
             exit()
 
     def validator_action(self, action):
