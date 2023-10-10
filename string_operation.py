@@ -3,14 +3,22 @@ from abc import ABC, abstractmethod
 
 class BaseStringOperation(ABC):
     def __init__(self):
-        self.input = input("Input: ")
+        self.input = self.validator(input("Input: "))
+    def validator(self, string_input):
+        try:
+            return string_input
+        except:
+            print("Error, ValueError")
+    @abstractmethod
+    def start(self):
+        pass
 
-
+# TODO: {1. Длина строки}
 class CalculationElem(BaseStringOperation):
-    def len_string(self):
-        print(len(self.input))
+    def start(self):
+        return print(len(self.input))
 
-
+# TODO: {2. Вводим строчку посчитать количество каждой буквы}
 class UniqueLetters(BaseStringOperation):
     def splitting_string(self):
         splitted_string = []
@@ -28,7 +36,7 @@ class UniqueLetters(BaseStringOperation):
             dict_elements[f"{i}"] = 0
         return dict_elements
 
-    def rep_counting(self, dict_elements: dict, splitting_string: str):
+    def rep_counting(self, dict_elements: dict, splitting_string: list):
 
         for i in splitting_string:
             dict_elements[f"{i}"] += 1
@@ -39,6 +47,7 @@ class UniqueLetters(BaseStringOperation):
         dict_with_keys = self.creating_dictionary_by_keys(self.unique_letters(split_str))
         count_items = self.rep_counting(dict_with_keys, split_str)
         return print(count_items)
-CalculationElem().len_string()
-UniqueLetters().start()
 
+
+CalculationElem().start()
+UniqueLetters().start()
