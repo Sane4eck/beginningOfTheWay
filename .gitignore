@@ -3,3 +3,5 @@ main.py
 training.py
 __pycache__/
 .idea
+labs.py
+labs_2.py
