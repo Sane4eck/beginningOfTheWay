@@ -1,20 +1,19 @@
 from abc import ABC, abstractmethod
+from collections import Counter
+import string
 
 
 class BaseStringOperation(ABC):
     def __init__(self):
-        self.input = self.exit(self.validator(input("Enter string: ")))
+        self.input = self.exit(input(self.text_for_input()))
+
+    def text_for_input(self):
+        return "Enter string: "
 
     def exit(self, input_):
         if input_ == "exit()":
             exit()
         return input_
-
-    def validator(self, string_input):
-        try:
-            return string_input
-        except:
-            print("Error, ValueError")
 
     @abstractmethod
     def start(self):
@@ -23,10 +22,10 @@ class BaseStringOperation(ABC):
 
 class BaseStringOperationTwoInput(ABC):
     def __init__(self):
-        self.input_1 = self.exit(self.validator(input(self.text_for_input()[0])))
-        self.input_2 = self.exit(self.validator(input(self.text_for_input()[1])))
+        text1, text2 = self.text_for_input()
+        self.input_1 = self.exit(input(text1))
+        self.input_2 = self.exit(input(text2))
 
-    @abstractmethod
     def text_for_input(self):
         return "Enter string: ", "Enter string: "
 
@@ -34,12 +33,6 @@ class BaseStringOperationTwoInput(ABC):
         if input_ == "exit()":
             exit()
         return input_
-
-    def validator(self, input_):
-        try:
-            return input_
-        except:
-            print("Error, ValueError")
 
     @abstractmethod
     def start(self):
@@ -54,56 +47,23 @@ class CalculationElem(BaseStringOperation):
 
 # TODO: {2. Вводим строчку посчитать количество каждой буквы}
 class UniqueLetters(BaseStringOperation):
-    def splitting_string(self):
-        splitted_string = []
-        for i in self.input:
-            splitted_string.append(i)
-        return splitted_string
-
-    def unique_letters(self, splitted_string):
-        string_in_set = set(splitted_string)
-        return string_in_set
-
-    def creating_dictionary_by_keys(self, string_in_set):
-        dict_elements = dict()
-        for i in string_in_set:
-            dict_elements[f"{i}"] = 0
-        return dict_elements
-
-    def rep_counting(self, dict_elements: dict, splitting_string: list):
-
-        for i in splitting_string:
-            dict_elements[f"{i}"] += 1
-        return dict_elements
-
     def start(self):
-        split_str = self.splitting_string()
-        dict_with_keys = self.creating_dictionary_by_keys(self.unique_letters(split_str))
-        count_items = self.rep_counting(dict_with_keys, split_str)
+        count_items = dict(Counter(self.input))
         print(count_items)
 
 
 # TODO: {3. Ввести строку, где нужно поменять все повторяюще элементы на какой-то символ}
 
-class ReplacingRepeatedLetters(UniqueLetters):
-    def replacing_letters(self, split_str, dictionary_):
-        string_my = []
-        for i in split_str:
-            if dictionary_[i] > 1:
-                string_my.append("*")
-            else:
-                string_my.append(i)
-        return "".join(string_my)
+class ReplacingRepeatedLetters(BaseStringOperationTwoInput):
+    def text_for_input(self):
+        return "Enter string: ", "Enter letter: "
 
     def start(self):
-        split_str = self.splitting_string()
-        dict_with_keys = self.creating_dictionary_by_keys(self.unique_letters(split_str))
-        count_items = self.rep_counting(dict_with_keys, split_str)
-        new_string = self.replacing_letters(split_str, count_items)
-        print(new_string)
+        result = self.input_1.replace(self.input_2, "*")
+        print(result)
 
 
-# TODO: {4. Взять 2 строки и поменять у друг друга первые 2 буквы. Превратить в одну строчку}
+# TODO: {4. Взять 2 строки и поменять у друг друга первые 2 буквы. Превратить в одну строчку}GGGOOGOFD
 class ReplacingOneAndTwoElements(BaseStringOperationTwoInput):
     def text_for_input(self):
         return "Enter string 1: ", "Enter string 2: "
@@ -129,9 +89,6 @@ class SentenceToArray(BaseStringOperation):
 
 # TODO: {6. Ввести строчку. Вывести только гласные или негласные буквы (должен быть выбор)}
 class SeparationVowelsConsonant(BaseStringOperationTwoInput):
-    def __init__(self):
-        self.input_1 = self.exit(self.validator(input(self.text_for_input()[0])))
-        self.input_2 = self.validator_for_choice(self.exit(self.validator(input(self.text_for_input()[1]))))
     def text_for_input(self):
         return "Enter string: ", "Choice 1 for display \'Vowels\' or 2 for display \'Consonant\': "
 
@@ -146,16 +103,10 @@ class SeparationVowelsConsonant(BaseStringOperationTwoInput):
             exit()
 
     def sorted_by_choosing(self, input_string, input_choice):
-        list_vowels = {"A", "E", "I", "O", "U", "a", "e", "i", "o", "u"}
-        list_consonant = {"B", 'C', "D", 'F', "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X",
-                          "Y", "Z", "b", 'c', "d", 'f', "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v",
-                          "w", "x", "y", "z"
-                          }
-        if input_choice == 1:
-            list_by_sorted = list_vowels
-        elif input_choice == 2:
-            list_by_sorted = list_consonant
+        list_vowels = 'aeiouAEIOU'
+        list_consonant = ''.join(c for c in string.ascii_letters if c not in list_vowels)
 
+        list_by_sorted = list_vowels if input_choice == 1 else list_consonant
         string_only_vowels_or_consonant = ""
         for i in input_string:
             if i in list_by_sorted:
@@ -163,7 +114,8 @@ class SeparationVowelsConsonant(BaseStringOperationTwoInput):
         return string_only_vowels_or_consonant
 
     def start(self):
-        var_output = self.sorted_by_choosing(self.input_1, self.input_2)
+        self.validator_for_choice(self.input_2)
+        var_output = self.sorted_by_choosing(self.input_1, self.validator_for_choice(self.input_2))
         print(var_output)
 
 
@@ -199,15 +151,8 @@ class DetectingReplica(BaseStringOperationTwoInput):
     def text_for_input(self):
         return "Enter string: ", "Enter string for find in first string: "
 
-    def detect_replic(self, string_origin: str, string_part: str):
-        if string_part in string_origin:
-            return True
-        else:
-            return False
-
     def start(self):
-        bool_var = self.detect_replic(self.input_1, self.input_2)
-        if bool_var == True:
+        if self.input_2 in self.input_1:
             print(f"String: \"{self.input_2}\", already have in \"{self.input_1}\"")
         else:
             print(f"String: \"{self.input_2}\", no detecting in \"{self.input_1}\"")
@@ -233,55 +178,31 @@ class RemoveThirdWord(SentenceToArray):
 class ChangingCase(BaseStringOperationTwoInput):
 
     def text_for_input(self):
-        return "Enter string: ", "Enter case (lower or upper): "
+        return "Enter string: ", "Enter case (lower or upper or mixed): "
 
-    def changing_case_in_string(self, string_: str, case_: str):
-        if case_ == "lower":
-            first_letter = string_[:1]
-            rest_letter = string_[1:]
-            return "".join(first_letter.upper() + rest_letter.lower())
-        elif case_ == "upper":
-            first_letter = string_[:1]
-            rest_letter = string_[1:]
-            return "".join(first_letter.lower() + rest_letter.upper())
+    def start(self):
+        if self.input_2 == "lower":
+            result = self.input_1.lower()
+        elif self.input_2 == "upper":
+            result = self.input_1.upper()
+        elif self.input_2 == "mixed":
+            result = self.input_1[:1].upper() + self.input_1[1:].lower()
         else:
             print("No such case exists...")
             exit()
-
-    def start(self):
-        result = self.changing_case_in_string(self.input_1, self.input_2)
         print(result)
 
 
 class ClassForStartProgram(BaseStringOperation):
-    def __init__(self):
-        self.input = self.exit(self.validator(input("Enter task number (1 - 11): ")))
+    def text_for_input(self):
+        return "Enter task number (1 - 11): "
 
     def start(self):
-        if self.input == "exit()":
-            exit()
-        elif self.input == "1":
-            return CalculationElem().start()
-        elif self.input == "2":
-            return UniqueLetters().start()
-        elif self.input == "3":
-            return ReplacingRepeatedLetters().start()
-        elif self.input == "4":
-            return ReplacingOneAndTwoElements().start()
-        elif self.input == "5":
-            return SentenceToArray().start()
-        elif self.input == "6":
-            return SeparationVowelsConsonant().start()
-        elif self.input == "7":
-            return AddStringInTheMiddle().start()
-        elif self.input == "8":
-            return SortingStringByAlphabet().start()
-        elif self.input == "9":
-            return DetectingReplica().start()
-        elif self.input == "10":
-            return RemoveThirdWord().start()
-        elif self.input == "11":
-            return ChangingCase().start()
+        x = {"1": CalculationElem, "2": UniqueLetters, "3": ReplacingRepeatedLetters, "4": ReplacingOneAndTwoElements,
+             "5": SentenceToArray, "6": SeparationVowelsConsonant, "7": AddStringInTheMiddle,
+             "8": SortingStringByAlphabet, "9": DetectingReplica, "10": RemoveThirdWord, "11": ChangingCase}
+        if x.get(self.input):
+            x[self.input]().start()
         else:
             print("There is no such task...")
             exit()
