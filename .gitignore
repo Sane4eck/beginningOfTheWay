@@ -5,3 +5,4 @@ __pycache__/
 .idea
 labs.py
 labs_2.py
+generator_training.py

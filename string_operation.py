@@ -107,10 +107,7 @@ class SeparationVowelsConsonant(BaseStringOperationTwoInput):
         list_consonant = ''.join(c for c in string.ascii_letters if c not in list_vowels)
 
         list_by_sorted = list_vowels if input_choice == 1 else list_consonant
-        string_only_vowels_or_consonant = ""
-        for i in input_string:
-            if i in list_by_sorted:
-                string_only_vowels_or_consonant += i
+        string_only_vowels_or_consonant = "".join( j for j in input_string if j in list_by_sorted)
         return string_only_vowels_or_consonant
 
     def start(self):
@@ -186,7 +183,7 @@ class ChangingCase(BaseStringOperationTwoInput):
         elif self.input_2 == "upper":
             result = self.input_1.upper()
         elif self.input_2 == "mixed":
-            result = self.input_1[:1].upper() + self.input_1[1:].lower()
+            result = self.input_1.title()
         else:
             print("No such case exists...")
             exit()
