@@ -14,6 +14,7 @@ class BaseDictClass:
             print("Entered not dict...")
             exit()
 
+
 class BaseDictClassTwoInput(BaseDictClass):
 
     @abstractmethod
@@ -94,6 +95,25 @@ class GetKeyByValue(BaseDictClassTwoInput):
         print(value)
 
 
+class ClassForStartProgram:
+    def __init__(self):
+        self.num_func = self.validator(input("Enter number function (1-8): "))
+
+    def validator(self, int_values):
+        try:
+            if int(int_values) > 0 and int(int_values) < 9:
+                return int(int_values)
+            else:
+                print("Entered not integer number in range (1-8)...")
+                exit()
+        except:
+            print("Entered not integer number...")
+            exit()
+
+    def start(self):
+        print(self.num_func)
+
+
 dict_value = {"id_0": 1, "id_1": 20, "id_2": 3, "id_3": 40, "id_4": 5}
 list_by_dict = [{"A": 3}, {"A": 122}, {"A": 33}, {"A": 605}, {"A": 42}]
 # SummDictValue().start(dict_value)
@@ -103,4 +123,5 @@ list_by_dict = [{"A": 3}, {"A": 122}, {"A": 33}, {"A": 605}, {"A": 42}]
 # SortDictByKey().start(list_by_dict)
 # CheckDictKey().start(dict_value, "id_2")
 # CheckingKeyAndAddDefaultValue().start(dict_value, "id_2")
-GetKeyByValue().start(dict_value, 20)
+# GetKeyByValue().start(dict_value, 20)
+ClassForStartProgram().start()
